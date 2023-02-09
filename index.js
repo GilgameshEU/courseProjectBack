@@ -7,7 +7,7 @@ import router from "./routes/index.js";
 dotenv.config();
 const app = express();
 
-app.use(cors({ credentials: true, origin: "https://coursebackproject.onrender.com/" }));
+app.use(cors({ credentials: true, origin: "https://coursebackproject.onrender.com/", methods: ["GET", "POST", "DELETE"] }));
 app.use(cookieParser());
 app.use(express.json());
 app.use(router);
