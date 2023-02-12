@@ -42,6 +42,10 @@ export const Login = async (req, res) => {
         email: req.body.email,
       },
     });
+    console.log(user[0].status);
+    if (user[0].status === false) {
+      return res.status(400).json({ msg: "User is blocked" });
+    }
     const match = await bcrypt.compare(req.body.password, user[0].password);
     if (!match) return res.status(400).json({ msg: "Wrong Password" });
     const userId = user[0].id;
@@ -96,9 +100,6 @@ export const Logout = async (req, res) => {
 export const updateStatusAndRole = async (req, res) => {
   const { id } = req.params;
   const { status, role } = req.body;
-  console.log(status);
-  console.log(role);
-  console.log(id);
   Users.update({ status, role }, { where: { id } })
     .then(() => {
       res.send({ success: true });
@@ -108,16 +109,6 @@ export const updateStatusAndRole = async (req, res) => {
       res.status(500).send({ success: false, message: "Error updating user" });
     });
 };
-
-// export const updateStatusAndRole = async (req, res) => {
-//   const userId = req.params.id;
-//   const { status, role } = req.body;
-//   if (!userId) return res.sendStatus(204);
-//   const user = await Users.update(userId);
-//   if (!user) return res.sendStatus(204);
-//   await user.update({ status, role });
-//   return res.sendStatus(200);
-// };
 
 export const DeleteUser = async (req, res) => {
   const userId = req.params.id;
