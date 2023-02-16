@@ -1,8 +1,8 @@
-import Collection from "../models/UserModel.js";
+import Users from "../models/UserModel.js";
 
 export const getCollections = async (req, res) => {
   try {
-    const collections = await Collection.findAll({
+    const collections = await Users.Collections.findAll({
       attributes: ["id", "name", "description", "theme", "image_url", "createdAt", "updatedAt"],
     });
     res.json(collections);

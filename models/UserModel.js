@@ -1,38 +1,3 @@
-// import { Sequelize } from "sequelize";
-// import db from "../config/Database.js";
-
-// const { DataTypes } = Sequelize;
-
-// const Users = db.define(
-//   "users",
-//   {
-//     name: {
-//       type: DataTypes.STRING,
-//       collate: "utf8_General_ci",
-//     },
-//     email: {
-//       type: DataTypes.STRING,
-//       collate: "utf8_General_ci",
-//     },
-//     password: {
-//       type: DataTypes.STRING,
-//     },
-//     status: {
-//       type: DataTypes.BOOLEAN,
-//     },
-//     role: {
-//       type: DataTypes.STRING,
-//     },
-//     refresh_token: {
-//       type: DataTypes.TEXT,
-//     },
-//   },
-//   {
-//     freezeTableName: true,
-//   }
-// );
-
-// export default Users;
 import { Sequelize } from "sequelize";
 import db from "../config/Database.js";
 
@@ -69,7 +34,7 @@ const Users = db.define(
 );
 
 // Collections table
-const Collection = db.define("collections", {
+const Collections = db.define("collections", {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -168,11 +133,11 @@ const Comment = db.define("comments", {
 });
 
 // Define table relationships
-Users.hasMany(Collection);
-Collection.belongsTo(Users);
+Users.hasMany(Collections);
+Collections.belongsTo(Users);
 
-Collection.hasMany(Item);
-Item.belongsTo(Collection);
+Collections.hasMany(Item);
+Item.belongsTo(Collections);
 
 Users.hasMany(Like);
 Like.belongsTo(Users);
@@ -192,11 +157,7 @@ Comment.belongsTo(Item);
 
 export default {
   Users,
-  Collection: {
-    findAll() {
-      return Collection.findAll();
-    },
-  },
+  Collections,
   Item,
   Like,
   Comment,
