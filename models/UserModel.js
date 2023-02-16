@@ -88,14 +88,6 @@ const Collection = db.define("collections", {
   image_url: {
     type: DataTypes.STRING,
   },
-  created_at: {
-    type: DataTypes.DATE,
-    defaultValue: Sequelize.NOW,
-  },
-  updated_at: {
-    type: DataTypes.DATE,
-    defaultValue: Sequelize.NOW,
-  },
 });
 
 // Items table
@@ -151,14 +143,6 @@ const Item = db.define("items", {
   field_12: {
     type: DataTypes.BOOLEAN,
   },
-  created_at: {
-    type: DataTypes.DATE,
-    defaultValue: Sequelize.NOW,
-  },
-  updated_at: {
-    type: DataTypes.DATE,
-    defaultValue: Sequelize.NOW,
-  },
 });
 
 // Likes table
@@ -167,10 +151,6 @@ const Like = db.define("likes", {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
-  },
-  created_at: {
-    type: DataTypes.DATE,
-    defaultValue: Sequelize.NOW,
   },
 });
 
@@ -184,10 +164,6 @@ const Comment = db.define("comments", {
   comment_text: {
     type: DataTypes.TEXT,
     allowNull: false,
-  },
-  created_at: {
-    type: DataTypes.DATE,
-    defaultValue: Sequelize.NOW,
   },
 });
 
@@ -214,4 +190,14 @@ Comment.belongsTo(Item);
   await db.sync();
 })();
 
-export default Users;
+export default {
+  Users,
+  Collection: {
+    findAll() {
+      return Collection.findAll();
+    },
+  },
+  Item,
+  Like,
+  Comment,
+};

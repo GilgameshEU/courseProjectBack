@@ -1,5 +1,6 @@
 import express from "express";
 import { getUsers, Register, Login, Logout, updateStatusAndRole, DeleteUser } from "../controllers/Users.js";
+import { getCollections } from "../controllers/Collections.js";
 import { verifyToken } from "../middleware/VerifyToken.js";
 import { refreshToken } from "../controllers/RefreshToken.js";
 
@@ -12,5 +13,7 @@ router.get("/token", refreshToken);
 router.delete("/logout", Logout);
 router.put("/users/:id/updateStatusAndRole", updateStatusAndRole);
 router.delete("/users/:id/delete", DeleteUser);
+
+router.get("/collections", getCollections);
 
 export default router;
