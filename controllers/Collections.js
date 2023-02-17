@@ -1,9 +1,14 @@
-import Collection from "../models/UserModel.js";
+import Collections from "../models/Collections.js";
+import Users from "../models/Users.js";
 
 export const getCollections = async (req, res) => {
   try {
-    const collections = await Collection.findAll({
+    const collections = await Collections.findAll({
       attributes: ["id", "name", "description", "theme", "image_url", "createdAt", "updatedAt"],
+      include: {
+        model: Users,
+        attributes: ["name"],
+      },
     });
     res.json(collections);
   } catch (error) {
