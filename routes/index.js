@@ -1,19 +1,22 @@
 import express from "express";
-import { getUsers, Register, Login, Logout, updateStatusAndRole, DeleteUser } from "../controllers/Users.js";
-import { getCollections } from "../controllers/Collections.js";
+import { getUsers, register, login, logout, updateStatusAndRole, deleteUser } from "../controllers/Users.js";
+import { getCollections, createCollection, updateCollection, deleteCollection } from "../controllers/Collections.js";
 import { verifyToken } from "../middleware/VerifyToken.js";
 import { refreshToken } from "../controllers/RefreshToken.js";
 
 const router = express.Router();
 
 router.get("/users", verifyToken, getUsers);
-router.post("/users", Register);
-router.post("/login", Login);
+router.post("/users", register);
+router.post("/login", login);
 router.get("/token", refreshToken);
-router.delete("/logout", Logout);
+router.delete("/logout", logout);
 router.put("/users/:id/updateStatusAndRole", updateStatusAndRole);
-router.delete("/users/:id/delete", DeleteUser);
+router.delete("/users/:id/delete", deleteUser);
 
 router.get("/collections", getCollections);
+router.post("/createCollection", createCollection);
+router.put("/collections/:id/updateCollection", updateCollection);
+router.delete("/collections/:id/delete", deleteCollection);
 
 export default router;

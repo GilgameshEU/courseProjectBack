@@ -13,7 +13,7 @@ export const getUsers = async (req, res) => {
   }
 };
 
-export const Register = async (req, res) => {
+export const register = async (req, res) => {
   const { name, email, password, confPassword } = req.body;
   if (!name || !email || !password) return res.status(400).json({ msg: "Name, email, and password are required", field: !name ? "name" : !email ? "email" : "password" });
   if (password !== confPassword) return res.status(400).json({ msg: "Password and Confirm Password do not match" });
@@ -35,7 +35,7 @@ export const Register = async (req, res) => {
   }
 };
 
-export const Login = async (req, res) => {
+export const login = async (req, res) => {
   try {
     const user = await Users.findAll({
       where: {
@@ -76,7 +76,7 @@ export const Login = async (req, res) => {
   }
 };
 
-export const Logout = async (req, res) => {
+export const logout = async (req, res) => {
   const refreshToken = req.cookies.refreshToken;
   if (!refreshToken) return res.sendStatus(204);
   const user = await Users.findAll({
@@ -111,7 +111,7 @@ export const updateStatusAndRole = async (req, res) => {
     });
 };
 
-export const DeleteUser = async (req, res) => {
+export const deleteUser = async (req, res) => {
   const userId = req.params.id;
   if (!userId) return res.sendStatus(204);
   const user = await Users.findByPk(userId);
