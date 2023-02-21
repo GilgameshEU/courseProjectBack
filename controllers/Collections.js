@@ -5,7 +5,7 @@ import Users from "../models/Users.js";
 export const getCollections = async (req, res) => {
   try {
     const collections = await Collections.findAll({
-      attributes: ["id", "name", "description", "theme", "image_url", "createdAt", "updatedAt"],
+      attributes: ["id", "name", "description", "theme", "image_url", "createdAt", "updatedAt", "userId"],
       include: {
         model: Users,
         attributes: ["name"],
@@ -20,8 +20,7 @@ export const getCollections = async (req, res) => {
 
 // Создание новой коллекции
 export const createCollection = async (req, res) => {
-  const { name, description, theme, image_url } = req.body;
-  const { userId } = req.params;
+  const { name, description, theme, image_url, userId } = req.body;
   try {
     const collection = await Collections.create({
       name,
@@ -40,7 +39,7 @@ export const createCollection = async (req, res) => {
 // Обновление существующей коллекции
 export const updateCollection = async (req, res) => {
   const { name, description, theme, image_url } = req.body;
-  const { collectionId } = req.params;
+  const { id: collectionId } = req.params;
   try {
     const collection = await Collections.findOne({ where: { id: collectionId } });
     if (!collection) {
@@ -61,7 +60,7 @@ export const updateCollection = async (req, res) => {
 
 // Удаление коллекции
 export const deleteCollection = async (req, res) => {
-  const { collectionId } = req.params;
+  const { id: collectionId } = req.params;
   try {
     const collection = await Collections.findOne({ where: { id: collectionId } });
     if (!collection) {

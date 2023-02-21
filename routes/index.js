@@ -17,6 +17,6 @@ router.delete("/users/:id/delete", deleteUser);
 router.get("/collections", getCollections);
 router.post("/createCollection", createCollection);
 router.put("/collections/:id/updateCollection", updateCollection);
-router.delete("/collections/:id/delete", deleteCollection);
+router.delete("/collections/:id/deleteCollection", deleteCollection);
 
 export default router;
