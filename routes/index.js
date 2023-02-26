@@ -1,7 +1,7 @@
 import express from "express";
 import { getUsers, register, login, logout, updateStatusAndRole, deleteUser } from "../controllers/Users.js";
 import { getCollections, createCollection, updateCollection, deleteCollection } from "../controllers/Collections.js";
-import { getCollectionItems } from "../controllers/Items.js";
+import { getItems, getAllItems } from "../controllers/Items.js";
 import { verifyToken } from "../middleware/VerifyToken.js";
 import { refreshToken } from "../controllers/RefreshToken.js";
 
@@ -20,6 +20,7 @@ router.post("/createCollection", createCollection);
 router.put("/collections/:id/updateCollection", updateCollection);
 router.delete("/collections/:id/deleteCollection", deleteCollection);
 
-router.get("/collections/:id/items", getCollectionItems);
+router.get("/collections/:id/items", getItems);
+router.get("/collections/items", getAllItems);
 
 export default router;

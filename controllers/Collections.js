@@ -1,15 +1,23 @@
 import Collections from "../models/Collections.js";
 import Users from "../models/Users.js";
-
+import Items from "../models/Items.js";
+import { Sequelize } from "sequelize";
 // Получение всех коллекций
 export const getCollections = async (req, res) => {
   try {
     const collections = await Collections.findAll({
-      attributes: ["id", "name", "description", "theme", "image_url", "createdAt", "updatedAt", "userId"],
-      include: {
-        model: Users,
-        attributes: ["name"],
-      },
+      attributes: ["id", "name", "description", "theme", "image_url", "createdAt", "updatedAt", "userId", [Sequelize.fn("COUNT", Sequelize.col("items.id")), "item_count"]],
+      include: [
+        {
+          model: Users,
+          attributes: ["name"],
+        },
+        {
+          model: Items,
+          attributes: [],
+        },
+      ],
+      group: ["collections.id"],
     });
     res.json(collections);
   } catch (error) {
