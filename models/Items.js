@@ -57,6 +57,9 @@ const Items = db.define("items", {
   field_12: {
     type: DataTypes.BOOLEAN,
   },
+  image: {
+    type: DataTypes.STRING,
+  },
 });
 
 Items.hasMany(Likes);

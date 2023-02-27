@@ -6,7 +6,7 @@ import { Sequelize } from "sequelize";
 export const getCollections = async (req, res) => {
   try {
     const collections = await Collections.findAll({
-      attributes: ["id", "name", "description", "theme", "image_url", "createdAt", "updatedAt", "userId", [Sequelize.fn("COUNT", Sequelize.col("items.id")), "item_count"]],
+      attributes: ["id", "name", "description", "theme", "image", "createdAt", "updatedAt", "userId", [Sequelize.fn("COUNT", Sequelize.col("items.id")), "itemCount"]],
       include: [
         {
           model: Users,
@@ -28,13 +28,13 @@ export const getCollections = async (req, res) => {
 
 // Создание новой коллекции
 export const createCollection = async (req, res) => {
-  const { name, description, theme, image_url, userId } = req.body;
+  const { name, description, theme, image, userId } = req.body;
   try {
     const collection = await Collections.create({
       name,
       description,
       theme,
-      image_url,
+      image,
       userId,
     });
     res.status(201).json(collection);
@@ -46,7 +46,7 @@ export const createCollection = async (req, res) => {
 
 // Обновление существующей коллекции
 export const updateCollection = async (req, res) => {
-  const { name, description, theme, image_url } = req.body;
+  const { name, description, theme, image } = req.body;
   const { id: collectionId } = req.params;
   try {
     const collection = await Collections.findOne({ where: { id: collectionId } });
@@ -56,7 +56,7 @@ export const updateCollection = async (req, res) => {
       collection.name = name || collection.name;
       collection.description = description || collection.description;
       collection.theme = theme || collection.theme;
-      collection.image_url = image_url || collection.image_url;
+      collection.image = image || collection.image;
       await collection.save();
       res.json(collection);
     }

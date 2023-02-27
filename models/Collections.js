@@ -32,7 +32,7 @@ const Collections = db.define("collections", {
   theme: {
     type: DataTypes.STRING,
   },
-  image_url: {
+  image: {
     type: DataTypes.STRING,
   },
 });
