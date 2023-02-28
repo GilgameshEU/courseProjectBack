@@ -1,7 +1,8 @@
 import express from "express";
 import { getUsers, register, login, logout, updateStatusAndRole, deleteUser } from "../controllers/Users.js";
 import { getCollections, createCollection, updateCollection, deleteCollection } from "../controllers/Collections.js";
-import { getItems, getAllItems } from "../controllers/Items.js";
+import { getItems, getAllItems, getItem, createComment, createLike } from "../controllers/Items.js";
+//import { getComments } from "../controllers/Comments";
 import { verifyToken } from "../middleware/VerifyToken.js";
 import { refreshToken } from "../controllers/RefreshToken.js";
 
@@ -22,5 +23,9 @@ router.delete("/collections/:id/deleteCollection", deleteCollection);
 
 router.get("/collections/:id/items", getItems);
 router.get("/collections/items", getAllItems);
+router.get("/itemPage/:id/", getItem);
+
+router.post("/itemPage/:id/comment", createComment);
+router.post("/itemPage/:id/like", createLike);
 
 export default router;
