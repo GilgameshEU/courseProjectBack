@@ -29,9 +29,7 @@ const Collections = db.define("collections", {
   descriptionHtml: {
     type: DataTypes.VIRTUAL,
   },
-  theme: {
-    type: DataTypes.STRING,
-  },
+
   image: {
     type: DataTypes.STRING,
   },

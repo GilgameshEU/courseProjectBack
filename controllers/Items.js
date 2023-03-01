@@ -14,6 +14,34 @@ export const getItems = async (req, res) => {
   }
 };
 
+export const updateItem = async (req, res) => {
+  try {
+    const item = await Items.findByPk(req.params.id);
+    if (!item) {
+      return res.status(404).json({ message: "Item not found" });
+    }
+    await item.update(req.body);
+    res.json(item);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server error");
+  }
+};
+
+export const deleteItem = async (req, res) => {
+  try {
+    const item = await Items.findByPk(req.params.id);
+    if (!item) {
+      return res.status(404).json({ message: "Item not found" });
+    }
+    await item.destroy();
+    res.status(204).send();
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server error");
+  }
+};
+
 export const getAllItems = async (req, res) => {
   try {
     const items = await Items.findAll({

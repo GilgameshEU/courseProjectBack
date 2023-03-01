@@ -1,12 +1,13 @@
 import Collections from "../models/Collections.js";
 import Users from "../models/Users.js";
 import Items from "../models/Items.js";
+import Themes from "../models/Themes.js";
 import { Sequelize } from "sequelize";
 // Получение всех коллекций
 export const getCollections = async (req, res) => {
   try {
     const collections = await Collections.findAll({
-      attributes: ["id", "name", "description", "theme", "image", "createdAt", "updatedAt", "userId", [Sequelize.fn("COUNT", Sequelize.col("items.id")), "itemCount"]],
+      attributes: ["id", "name", "description", "themeId", "image", "createdAt", "updatedAt", "userId", [Sequelize.fn("COUNT", Sequelize.col("items.id")), "itemCount"]],
       include: [
         {
           model: Users,
@@ -15,6 +16,10 @@ export const getCollections = async (req, res) => {
         {
           model: Items,
           attributes: [],
+        },
+        {
+          model: Themes,
+          attributes: ["name"],
         },
       ],
       group: ["collections.id"],
@@ -28,12 +33,12 @@ export const getCollections = async (req, res) => {
 
 // Создание новой коллекции
 export const createCollection = async (req, res) => {
-  const { name, description, theme, image, userId } = req.body;
+  const { name, description, themeId, image, userId } = req.body;
   try {
     const collection = await Collections.create({
       name,
       description,
-      theme,
+      themeId,
       image,
       userId,
     });
@@ -46,7 +51,7 @@ export const createCollection = async (req, res) => {
 
 // Обновление существующей коллекции
 export const updateCollection = async (req, res) => {
-  const { name, description, theme, image } = req.body;
+  const { name, description, themeId, image } = req.body;
   const { id: collectionId } = req.params;
   try {
     const collection = await Collections.findOne({ where: { id: collectionId } });
@@ -55,7 +60,7 @@ export const updateCollection = async (req, res) => {
     } else {
       collection.name = name || collection.name;
       collection.description = description || collection.description;
-      collection.theme = theme || collection.theme;
+      collection.themeId = themeId || collection.themeId;
       collection.image = image || collection.image;
       await collection.save();
       res.json(collection);
