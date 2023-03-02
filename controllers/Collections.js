@@ -3,7 +3,7 @@ import Users from "../models/Users.js";
 import Items from "../models/Items.js";
 import Themes from "../models/Themes.js";
 import { Sequelize } from "sequelize";
-// Получение всех коллекций
+
 export const getCollections = async (req, res) => {
   try {
     const collections = await Collections.findAll({
@@ -31,7 +31,6 @@ export const getCollections = async (req, res) => {
   }
 };
 
-// Создание новой коллекции
 export const createCollection = async (req, res) => {
   const { name, description, themeId, image, userId } = req.body;
   try {
@@ -49,7 +48,6 @@ export const createCollection = async (req, res) => {
   }
 };
 
-// Обновление существующей коллекции
 export const updateCollection = async (req, res) => {
   const { name, description, themeId, image } = req.body;
   const { id: collectionId } = req.params;
@@ -71,7 +69,6 @@ export const updateCollection = async (req, res) => {
   }
 };
 
-// Удаление коллекции
 export const deleteCollection = async (req, res) => {
   const { id: collectionId } = req.params;
   try {

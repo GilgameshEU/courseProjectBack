@@ -88,7 +88,23 @@ export const getItem = async (req, res) => {
   }
 };
 
-// Создание нового комментария
+export const createItem = async (req, res) => {
+  const { name, description, imageUrl, collectionId, tags } = req.body;
+  try {
+    const newItem = await Items.create({
+      name,
+      description,
+      imageUrl,
+      collectionId,
+      tags,
+    });
+    res.status(201).json(newItem);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server error");
+  }
+};
+
 export const createComment = async (req, res) => {
   const { id } = req.params;
   const { comment_text, userId } = req.body;
@@ -107,26 +123,5 @@ export const createComment = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Failed to create comment" });
-  }
-};
-
-// Создание нового лайка
-export const createLike = async (req, res) => {
-  const { id } = req.params;
-  const { userId } = req.body;
-  try {
-    const item = await Items.findByPk(id);
-    if (!item) {
-      res.status(404).json({ error: "Item not found" });
-      return;
-    }
-    const like = await Likes.create({
-      itemId: item.id,
-      userId,
-    });
-    res.status(201).json(like);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: "Failed to create like" });
   }
 };
