@@ -4,7 +4,6 @@ import Collections from "./Collections.js";
 
 const { DataTypes } = Sequelize;
 
-// Themes table
 const Themes = db.define("themes", {
   id: {
     type: DataTypes.INTEGER,

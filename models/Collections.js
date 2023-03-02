@@ -2,10 +2,8 @@ import { Sequelize } from "sequelize";
 import db from "../config/Database.js";
 import Items from "./Items.js";
 import { marked } from "marked";
-
 const { DataTypes } = Sequelize;
 
-// Collections table
 const Collections = db.define("collections", {
   id: {
     type: DataTypes.INTEGER,
